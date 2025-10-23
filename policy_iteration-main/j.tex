@@ -1,0 +1,123 @@
+\documentclass[a4paper,11pt,oneside]{book} 
+\usepackage{CS_report} % DO NOT REMOVE THIS LINE. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+    \captionsetup[figure]{margin=1.5cm,font=small,name={Figure},labelsep=colon}
+    \captionsetup[table]{margin=1.5cm,font=small,name={Table},labelsep=colon}
+    
+    \frontmatter
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \begin{titlepage}  
+        \begin{center}
+            \includegraphics[width=3cm]{figures/logo2.png}\\[0.5cm]
+            {\LARGE Cairo University\\[0.5cm]
+            Faculty of Engineering\\[0.5cm] Computer Engineering Department}\\[2cm]
+			
+            \linespread{1.2}\huge {
+                %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                % Project Title
+                %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                Policy Iteration
+            }
+            \linespread{1}~\\[2cm]
+
+            {\Large 
+                %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                % Team Information
+                %%%%%%%%%%%%%%%%%%%%%%%%%%%%             
+                Team Name/Number: \textbf{5}\\[0.5cm]
+                \textbf{Abdelrahman Ashraf Mahmoud}\\[0.3cm]
+                \textbf{Nour Aldeen Hassan}
+            }\\[1cm] 
+            
+            {\large 
+                %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                % Supervisor
+                %%%%%%%%%%%%%%%%%%%%%%%%%%%%             
+                \emph{Supervisor:} Ayman AboElhassan}\\[1cm]
+            
+            \today
+        \end{center}
+    \end{titlepage}
+    
+    \mainmatter
+
+\chapter*{Deliverables}
+    
+    \noindent\textbf{Repository Link:} \\
+    \url{https://github.com/AbdelrahmanAshraf3000/policy_iteration} \\[0.5cm]
+    
+    \noindent\textbf{Video Record Link:} \\
+    \url{https://drive.google.com/drive/folders/1yLdUpxI3Q1bQ6t_a3jjgjwz2cx6fOWJd?usp=drive_link} \\[1cm]
+
+Now add your charts here with meaningful caption 
+
+%%% Example for chart
+\begin{figure}[h!] % [h!] suggests "here if possible"
+    \centering % Centers the image
+    \includegraphics[width=0.8\textwidth]{figures/Reinforcement-Learning-1.png} % Adjust width as needed
+    \caption{This is a descriptive caption for your chart.} % Your caption
+    \label{fig:mychart} % Label for cross-referencing
+\end{figure}
+
+%% Example of table (or you can add it as image)
+\begin{table}[h]
+\centering
+\caption{Example Table with Booktabs}
+\label{tab:booktabs_example}
+\begin{tabular}{lccr}
+\toprule
+\textbf{Header 1} & \textbf{Header 2} & \textbf{Header 3} & \textbf{Header 4} \\
+\midrule
+Item A & Value X & 10 & Note 1 \\
+Item B & Value Y & 20 & Note 2 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\chapter*{Discussion}
+
+\section{Experiments}
+Discuss your experiments and their outcome.
+Indicate how the experiment outcome changes with parameters, etc.
+
+\section{Question Answers}
+
+\begin{enumerate}
+    \item \textbf{What is the state-space size of the 5x5 Grid Maze problem?}\\
+    There are 25 possible agent positions, but since the agent cannot occupy the same cell as obstacles or the goal, the total number of distinct configurations (states) also depends on where obstacles or goals are placed. If we assume 4 goal or blocked cells, the total number of possible positions is:
+    \[
+    25 \times 24 \times 23C2 = 151{,}800
+    \]
+
+    \item \textbf{How to optimize the policy iteration for the Grid Maze problem?}\\
+    To optimize policy iteration:
+    \begin{itemize}
+        \item Use vectorized computation (NumPy arrays) to speed up policy evaluation.
+        \item Exploit symmetry: equivalent states under rotation/reflection can share values.
+        \item Apply a convergence threshold instead of exact equality in value updates.
+        \item Use modified policy iteration (partial evaluation) for faster convergence.
+        \item Cache transition probabilities to avoid recomputation.
+    \end{itemize}
+
+    \item \textbf{How many iterations did it take to converge on a stable policy for a 5x5 maze?}\\
+    Policy iteration typically converges in about \textbf{3–6 iterations}, depending on the reward structure and discount factor. For example, with $\gamma = 0.9$ and 15\% transition noise, convergence was observed in \textbf{4 iterations}.
+
+    \item \textbf{Explain, with an example, how policy iteration behaves with multiple goal cells.}\\
+    If multiple cells yield terminal rewards, policy iteration assigns high value to paths leading to any of them. For instance, if both (4,4) and (0,4) are goals with reward +10, the optimal policy will guide the agent toward whichever goal is closer or easier to reach. The grid thus divides into regions where each goal dominates nearby states.
+
+    \item \textbf{Can policy iteration work on a 10x10 maze? Explain why.}\\
+    Yes, policy iteration can work on a 10×10 maze (100 states), but computation time increases quadratically. It remains feasible but slower for moderate sizes. For much larger grids, approximate or value iteration methods are preferred.
+
+    \item \textbf{Can policy iteration work on a continuous-space maze? Explain why.}\\
+    Not directly, because policy iteration assumes a finite, discrete state and action space. In continuous spaces, the state set is infinite. To handle this, the space must be discretized or approximated using function approximators such as neural networks.
+
+    \item \textbf{Can policy iteration work with moving bad cells (like Pac-Man moving ghosts)? Explain why.}\\
+    Not in its standard form, because it assumes a stationary MDP where transition probabilities do not change. Moving ghosts make the environment non-stationary. Adaptive methods such as time-dependent policies, model-based RL, or Q-learning are needed instead.
+\end{enumerate}
+
+ 
+\end{document}
